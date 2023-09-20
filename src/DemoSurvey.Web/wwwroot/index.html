@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta id="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Опрос участником митапа</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">Опрос для участников митапа</h1>
+        <div class="survey">
+            <div class="survey__my-votes">
+                <h4>Выберите направления которые хотите изучать</h4>
+                <div class="survey-option-row">
+                    <input type="checkbox" id="Java" class="survey-option"/>
+                    <label for="Java">Java</label>
+                </div>
+                <div class="survey-option-row">
+                    <input type="checkbox" id="Scala" class="survey-option"/>
+                    <label for="Scala">Scala</label>
+                </div>
+                <div class="survey-option-row">
+                    <input type="checkbox" id=".NET" class="survey-option"/>
+                    <label for=".NET">.NET / C#</label>
+                </div>
+                <div class="survey-option-row">
+                    <input type="checkbox" id="Python" class="survey-option"/>
+                    <label for="Python">Python</label>
+                </div>
+                <div class="survey-option-row">
+                    <input type="checkbox" id="GO" class="survey-option"/>
+                    <label for="GO">GO</label>
+                </div>
+                <div class="survey-option-row">
+                    <input type="checkbox" id="JS" class="survey-option"/>
+                    <label for="JS">JavaScript / TypeScript</label>
+                </div>
+                <div class="survey-option-row">
+                    <input type="checkbox" id="CSS" class="survey-option"/>
+                    <label for="CSS">CSS</label>
+                </div>
+                <div class="survey-option-row">
+                    <input type="checkbox" id="SQL" class="survey-option"/>
+                    <label for="SQL">SQL</label>
+                </div>
+                <div class="survey-option-row">
+                    <input type="checkbox" id="Kafka" class="survey-option"/>
+                    <label for="Kafka">Kafka</label>
+                </div>
+                <div class="survey-option-row">
+                    <input type="checkbox" id="ML" class="survey-option"/>
+                    <label for="ML">Машинное обучение</label>
+                </div>
+                <div class="survey-option-row">
+                    <input type="checkbox" id="QA" class="survey-option"/>
+                    <label for="QA">Тестирование</label>
+                </div>
+                <div class="survey-option-row">
+                    <input type="checkbox" id="BA" class="survey-option"/>
+                    <label for="BA">Бизнес-анализ</label>
+                </div>
+                <div class="survey-option-row">
+                    <input type="checkbox" id="SA" class="survey-option"/>
+                    <label for="SA">Системный анализ</label>
+                </div>                                                                                                                                                                                               
+            </div>
+        
+            <div class="survey__results">
+                <canvas id="survey-results-chart"></canvas>
+            </div>
+                
+                    
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('survey-results-chart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Java', 'Scala', '.NET', 'Python', 'Go', 'JS', 'CSS', 'SQL', 'Kafka', 'ML', 'QA', 'BA', 'SA'],
+                datasets: [{
+                    label: 'Заинтересованность участников митапа',
+                    data: [12, 19, 3, 5, 2, 3, 0, 1, 5, 10],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+     
+</body>
+</html>

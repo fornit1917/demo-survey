@@ -1,0 +1,52 @@
+body {
+    font-family: 'Fira Sans', sans-serif, Arial;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.survey {
+    display: flex;
+}
+
+.survey__my-votes {
+    width: 20rem;
+    margin-left: 2rem;
+}
+.survey__my-votes h4 {
+    text-align: center;
+}
+
+.survey__results {
+    width: 100%;
+}
+
+.survey-option-row {
+    margin-bottom: 0.5rem;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+@media (max-width: 800px) {
+    .survey {
+        flex-direction: column;
+    }
+    .survey__my-votes {
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    .survey__results {
+        width: 100%;
+    }
+    .survey-option-row {
+        display: inline-block;
+        margin-left: 1rem;
+    }
+}
