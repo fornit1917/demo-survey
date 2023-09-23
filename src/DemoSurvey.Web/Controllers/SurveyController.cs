@@ -38,6 +38,11 @@ public class SurveyController : ControllerBase
 
 
 
+
+
+
+
+
     [HttpDelete("votes")]
     public async Task RemoveAllResults()
     {

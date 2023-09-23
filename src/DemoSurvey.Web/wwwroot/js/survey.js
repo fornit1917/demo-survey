@@ -48,23 +48,14 @@
             { id: "BA", score: 0 },
             { id: "SA", score: 0 },
         ],
-        order: {
-            "Java": 0,
-            "Scala": 1,
-            ".NET": 2,
-            "Python": 3,
-            "Go": 4,
-            "JS": 5,
-            "CSS": 6,
-            "SQL": 7,
-            "Kafka": 8,
-            "ML": 9,
-            "QA": 10,
-            "BA": 11,
-            "SA": 12
-        },
+        order: {},
 
         init: function () {
+            for (var i = 0; i < this.initialData.length; i++) {
+                var item = this.initialData[i];
+                SurveyChart.order[item.id] = i;
+            }
+
             var ctx = document.getElementById('survey-results-chart');
             SurveyChart.chart = new Chart(ctx, {
                 type: 'bar',
