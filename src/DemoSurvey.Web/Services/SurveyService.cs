@@ -34,14 +34,14 @@ public class SurveyService : ISurveyService
             .ToListAsync();
     }
 
-    public async Task SaveVote(VoteDto vote)
+    public async Task SaveVote(string userId, VoteDto vote)
     {
         if (vote.IsChecked)
         {
             var voteModel = new VoteModel
             {
                 SurveyItemId = vote.SurveyItemId,
-                UserId = vote.UserId
+                UserId = userId
             };
             await _dbContext.Votes.AddAsync(voteModel);
             await _dbContext.SaveChangesAsync();
@@ -49,7 +49,7 @@ public class SurveyService : ISurveyService
         else
         {
             await _dbContext.Votes
-                .Where(x => x.UserId == vote.UserId && x.SurveyItemId == vote.SurveyItemId)
+                .Where(x => x.UserId == userId && x.SurveyItemId == vote.SurveyItemId)
                 .ExecuteDeleteAsync();
         }
     }

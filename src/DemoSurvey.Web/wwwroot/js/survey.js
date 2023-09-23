@@ -10,24 +10,29 @@
     }
 
     var API = {
+        sendRequest: function (method, url, body) {
+            return fetch(url, {
+                method,
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-SURVEY-USER-ID": getUserId(),
+                },
+                body: body === undefined ? undefined : JSON.stringify(body)
+            });
+        },
+
         getItemsCheckedByCurrentUser: function () {
-            return fetch("./api/survey/checked-by-user?userId=" + getUserId())
+            return API.sendRequest("GET", "./api/survey/checked-by-user")
                 .then(resp => resp.json());
         },
 
         getResults: function () {
-            return fetch("./api/survey/results")
+            return API.sendRequest("GET", "./api/survey/results")
                 .then(resp => resp.json());
         },
 
         sendVote: function (surveyItemId, isChecked) {
-            return fetch("./api/survey/vote", {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ surveyItemId, isChecked, userId: getUserId() })
-            });
+            return API.sendRequest("PUT", "./api/survey/vote", { surveyItemId, isChecked })
         }
     };
 

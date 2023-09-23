@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DemoSurvey.Web.Dto;
 using DemoSurvey.Web.Services;
@@ -24,18 +25,29 @@ public class SurveyController : ControllerBase
     }
 
     [HttpGet("checked-by-user")]
-    public async Task<List<string>> GetCheckedByUser([FromQuery] string userId)
+    public async Task<List<string>> GetCheckedByUser()
     {
+        var userId = GetUserId();
+        if (string.IsNullOrEmpty(userId))
+            return new List<string>(0);
+
         return await _surveyService.GetUserSelectedSurveyItems(userId);
     }
 
     [HttpPut("vote")]
     public async Task SaveVote([FromBody] VoteDto vote)
     {
-        await _surveyService.SaveVote(vote);
+        var userId = GetUserId();
+        if (string.IsNullOrEmpty(userId))
+            return;
+
+        await _surveyService.SaveVote(userId, vote);
     }
 
-
+    private string GetUserId()
+    {
+        return Request.Headers["X-SURVEY-USER-ID"].FirstOrDefault();
+    }
 
 
 

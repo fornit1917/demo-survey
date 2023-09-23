@@ -10,7 +10,7 @@ public interface ISurveyService
 
     Task<List<string>> GetUserSelectedSurveyItems(string userId);
 
-    Task SaveVote(VoteDto vote);
+    Task SaveVote(string userId, VoteDto vote);
 
     public Task RemoveAllVotes();
 }
