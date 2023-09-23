@@ -1,4 +1,8 @@
+using DemoSurvey.Web.Db;
+using DemoSurvey.Web.Services;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -11,7 +15,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<SurveyDbContext>(opts => {
+    opts.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+builder.Services.AddScoped<ISurveyService, SurveyService>();
+
 var app = builder.Build();
+
+app.UsePathBase("/survey-app");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -20,12 +32,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
 app.UseFileServer();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dataContext = scope.ServiceProvider.GetRequiredService<SurveyDbContext>();
+    dataContext.Database.Migrate();
+}
 
 app.Run();
