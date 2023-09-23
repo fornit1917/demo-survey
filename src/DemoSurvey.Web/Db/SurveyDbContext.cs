@@ -16,7 +16,7 @@ public class SurveyDbContext : DbContext
         modelBuilder.Entity<VoteModel>().ToTable("votes");
 
         modelBuilder.Entity<VoteModel>()
-            .HasKey(x => new { x.SurveyItemId, x.UserId });
+            .HasKey(x => new { x.UserId, x.SurveyItemId });
 
         modelBuilder.Entity<VoteModel>()
             .Property(x => x.UserId)
