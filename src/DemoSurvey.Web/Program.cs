@@ -1,4 +1,5 @@
 using DemoSurvey.Web.Db;
+using DemoSurvey.Web.Hubs;
 using DemoSurvey.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<SurveyDbContext>(opts => {
     opts.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -37,6 +39,8 @@ app.UseFileServer();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<SurveyHub>("survey-hub");
 
 using (var scope = app.Services.CreateScope())
 {
