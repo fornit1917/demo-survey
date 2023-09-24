@@ -49,9 +49,11 @@ body {
     }
     .survey__results {
         width: 100%;
+        margin-top: 3rem;
     }
     .survey-option-row {
         display: inline-block;
-        margin-left: 1rem;
+        margin: 1rem;
+        font-size: 1.5rem;
     }
 }
