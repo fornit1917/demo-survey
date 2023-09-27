@@ -15,11 +15,6 @@
                 "Content-Type": "application/json",
                 "X-SURVEY-USER-ID": getUserId()
             };
-            if (ServerEvents.clientId) {
-                headers["X-SIGNALR-CLIENT-ID"] = ServerEvents.clientId;
-            }
-
-            console.log({ headers });
 
             return fetch(url, {
                 method,
@@ -142,31 +137,6 @@
         }
     }
 
-    var ServerEvents = {
-        init: function () {
-            var hubConnection = new signalR.HubConnectionBuilder()
-                .withUrl("survey-hub")
-                .withAutomaticReconnect()
-                //.configureLogging(signalR.LogLevel.Information)
-                .build();
-
-            hubConnection.on("Vote", data => {
-                SurveyChart.updateItem(data.surveyItemId, data.isChecked);
-            });
-
-            hubConnection.onreconnected(connectionId => {
-                ServerEvents.clientId = connectionId;
-                API.getResults()
-                    .then(data => SurveyChart.updateAll(data));
-            });
-
-            return hubConnection.start().then(() => {
-                ServerEvents.clientId = hubConnection.connection.connectionId;
-            });
-        }
-    }
-
-
     // Инициализация приложения
 
     Promise.all([
@@ -181,8 +151,6 @@
 
         SurveyChart.updateAll(results);
         Checkboxes.setCheckedItems(checkedItems);
-
-        ServerEvents.init();
     });
 })();
 
